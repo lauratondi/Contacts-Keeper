@@ -11,7 +11,7 @@ import {
     FILTER_CONTACTS,
     CLEAR_FILTER
 } from '../types';
-import contactContext from './contactContext';
+
 
 
 const ContactState = props => {
@@ -38,7 +38,9 @@ const ContactState = props => {
                 phone: '333-333-3333',
                 type: 'professional'
             }
-        ]
+        ],
+        current: null,
+        filtered: null
     };
 
     // Now we pull out the state and dispatch from our reducer by using the useReducer Hook
@@ -51,28 +53,53 @@ const ContactState = props => {
         dispatch({ type: ADD_CONTACT, payload: contact });
     };
 
-
-
     // Delete contact
+    const deleteContact = id => {
+        dispatch({ type: DELETE_CONTACT, payload: id });
+    };
 
     // Set current contact
+    const setCurrent = contact => {
+        dispatch({ type: SET_CURRENT, payload: contact });
+    };
 
     // Clear current contact
+    // No payload because I set it to null (line 42)
+    const clearCurrent = () => {
+        dispatch({ type: CLEAR_CURRENT });
+    };
 
     // Update contact
+    const updateContact = contact => {
+        dispatch({ type: UPDATE_CONTACT, payload: contact });
+    };
 
     // Filter contacts
+    const filterContacts = text => {
+        dispatch({ type: FILTER_CONTACTS, payload: text });
+    };
 
     // Clear filter
+    const clearFilter = () => {
+        dispatch({ type: null });
+    };
 
     return (
-        <contactContext.Provider
+        <ContactContext.Provider
             value={{
                 contacts: state.contacts,
-                addContact
+                current: state.current,
+                filtered: state.filtered,
+                addContact,
+                deleteContact,
+                setCurrent,
+                clearCurrent,
+                updateContact,
+                filterContacts,
+                clearFilter
             }}>
             {props.children}
-        </contactContext.Provider>
+        </ContactContext.Provider>
     );
 };
 
