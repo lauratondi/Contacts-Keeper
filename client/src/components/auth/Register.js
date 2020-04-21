@@ -58,6 +58,7 @@ const Register = props => {
                 <div className='form-group'>
                     <label htmlFor="name">Name</label>
                     <input
+                        id="name"
                         type="text"
                         name="name"
                         value={name}
